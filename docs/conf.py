@@ -20,7 +20,6 @@ from pathlib import Path
 
 lib_name = "animals"
 
-
 def get_output_dir():
     read_the_docs_build_folder = Path(os.environ.get("READTHEDOCS_OUTPUT", None))
     main_folder = read_the_docs_build_folder.parent.absolute()
