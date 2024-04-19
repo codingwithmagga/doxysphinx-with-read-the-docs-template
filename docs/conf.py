@@ -18,9 +18,13 @@ import subprocess
 import os
 from pathlib import Path
 
+# name of you library which will be used as default folder in docs for doxygen
+# in general you can choose any name you want
 lib_name = "animals"
 
-def get_output_dir():
+
+# returns the doxygen output dir on the read the docs server
+def get_rtd_output_dir():
     read_the_docs_build_folder = Path(os.environ.get("READTHEDOCS_OUTPUT", None))
     main_folder = read_the_docs_build_folder.parent.absolute()
     output_dir = main_folder / "docs" / lib_name
@@ -28,6 +32,10 @@ def get_output_dir():
     return output_dir
 
 
+# configuration of the doxygen input file
+#
+# input is the "Doxyfile.in" file, where the values for the input and output folder as well as the tagfile will be set
+# the output is the file "Doxyfile" with the replaced values
 def configureDoxyfile(input_dir, output_dir):
     with open("Doxyfile.in", "r") as file:
         filedata = file.read()
@@ -45,14 +53,21 @@ def configureDoxyfile(input_dir, output_dir):
 # Check if we're running on Read the Docs' servers
 read_the_docs_build = os.environ.get("READTHEDOCS", None) == "True"
 
+# The following code will only executed on Read the Docs' servers
 if read_the_docs_build:
     read_the_docs_build_folder = Path(os.environ.get("READTHEDOCS_OUTPUT", None))
     input_dir = ".."
-    output_dir = get_output_dir()
+    output_dir = get_rtd_output_dir()
     output_dir.mkdir(parents=True, exist_ok=True)
     configureDoxyfile(input_dir, output_dir.absolute().as_posix())
+
+    # Running the subprocesses in the current file path, this should help when working with relative paths
     cwd = os.path.dirname(os.path.realpath(__file__))
+
+    # run doxygen with the generated Doxyfile
     subprocess.call(["doxygen", "Doxyfile"], shell=False, cwd=cwd)
+
+    # run doxysphinx
     subprocess.call(
         ["doxysphinx", "build", ".", read_the_docs_build_folder / "html", "Doxyfile"],
         shell=False,
@@ -79,7 +94,17 @@ extensions = [
     "sphinxcontrib.doxylink",
 ]
 
-doxylink = {lib_name: (lib_name + "/html/tagfile.xml", lib_name + "/html")}
+# doxylink configuration
+# The parameter lib_name specifies the prefix used in rst files for linking
+# The first inner parameter specifies the tag file,
+# the second one is a relative path pointing from sphinx output directory to the doxygen output folder
+# inside the output directory tree.
+doxylink = {
+    lib_name: (
+        lib_name + "/html/tagfile.xml", 
+        lib_name + "/html"
+        )
+    }
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

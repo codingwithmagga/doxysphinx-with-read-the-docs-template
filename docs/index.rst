@@ -1,3 +1,5 @@
+.. _Home:
+
 Welcome to this template documentation!
 =======================================
 
@@ -39,11 +41,11 @@ Sphinx
 
 Sphinx is a versatile documentation generation tool primarily used for Python projects but applicable to various programming languages. It converts source files written in formats like reStructuredText or Markdown into different output formats, such as HTML or PDF. Sphinx automates the process of creating documentation, including API references, cross-referencing between different sections, and customization of appearance. It streamlines the documentation workflow, ensuring projects are well-documented and accessible to users. 
 
-Sphinx is used in this project to create a nicely structured and organized HTML based documentation. Have a look at the `doc/*.rst` files to get a insight of the input files used by Sphinx. The configuration of Sphinx is stored in `doc/conf.py`. I added some comments into this file for clarification, also I will describe the most important parts under :ref:`Build Process`. 
+Sphinx is used in this project to create a nicely structured and organized HTML based documentation. Have a look at the ``docs/*.rst`` files to get a insight of the input files used by Sphinx. The configuration of Sphinx is stored in ``docs/conf.py``. I added some comments into this file for clarification, also I will describe the most important parts under :ref:`Build Process`. 
 
 Read the Docs
 +++++++++++++
 
 Read the Docs can be used to build, host, and share documentation. It can be used for free for open source and community projects, but there also premium membership options as well as business packages. 
 
-The online Read the Docs build process is configured in the file `.readthedocs.yaml`. In this project the build process using Sphinx and all the other tools is automated on the platform and will be published automatically.
+The online Read the Docs build process is configured in the file ``.readthedocs.yaml``. In this project the build process using Sphinx and all the other tools is automated on the platform and will be published automatically.
