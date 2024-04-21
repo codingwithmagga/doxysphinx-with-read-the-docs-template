@@ -77,7 +77,7 @@ Now doxysphinx can be executed. After the ``build`` command follows the sphinx s
 Running doxylink and Sphinx
 ---------------------------
 
-Doxylink will automatically be configured in the ``docs/conf.py`` when ``Sphinx`` is executed, see above. So it is sufficient now to run the  ``Sphinx`` build command ``sphinx-build``. The argument ``-b html`` specifies html files as output. In the current sphinx version an html build is the default so this is not absolutely necessary. After that, similar to the doxysphinx command above, the sphinx source directory ``${SPHINX_SOURCE}`` and the sphinx build directory ``${SPHINX_BUILD}`` follows. Again is in this example assumed that the command is executed in the ``docs`` folder. 
+Doxylink will automatically be configured in the ``docs/conf.py`` when ``Sphinx`` is executed, see above. So it is sufficient now to run the  ``Sphinx`` build command ``sphinx-build``. The argument ``-b html`` specifies html files as output. In the current sphinx version an html build is the default so this is not absolutely necessary. After that, similar to the doxysphinx command above, the sphinx source directory ``${SPHINX_SOURCE}`` and the sphinx build directory ``${SPHINX_BUILD}`` follows. Again is in this example assumed that the command is executed in the ``docs`` folder.
 
 .. code-block:: bash
   
@@ -90,4 +90,12 @@ That's it. Now you should find you documentation in the specified ``${SPHINX_BUI
 Using CMake
 +++++++++++
 
-In this project you will also find a CMake build process for a local generation of the documentation. All the mentioned build steps in the :ref:`Without CMake` section will be automatically executed during the build process.
+In this project you will also find a CMake build process for a local generation of the documentation. All the mentioned build steps in the :ref:`Without CMake` section will be automatically executed during the build process. The ``docs/CMakeLists.txt`` has already many helpful commands, so I will narrow down here the general idea used in this CMake build process. 
+
+Using the ``find_package()`` command from CMake, CMake looks for the three executables ``doxygen``, ``doxysphinx`` and ``sphinx-build``. While CMake comes up with a ``FindDoxygen.cmake`` file directly, the two other files, ``FindDoxysphinx`` and ``FindSphinx``, are given in the ``cmake`` folder of this repository. 
+
+.. note:: The ``cmake`` folder is added to the ``CMAKE_MODULE_PATH`` in the main ``CMakeLists.txt`` file.
+
+All of the three commands are executed with the given arguments above. This will be achieved by adding these as a custom command using CMakes function ``add_custom_command()``. And, depending on the output of these custom commands, for every custom command a corresponding custom CMake target is created is using ``add_custom_target()``. The custom command for ``doxygen`` depends on the public header files of the library. This means, that it will only be executed (and therefore the target will only be executed) when one of these header files changes. The same is done for the ``doxysphinx`` command, which will only be executed when one of these public header files changes. Similar the ``sphinx-build`` command depends on the used \*.rst files for the documentation. These are either the \*.rst files created by the ``doxysphinx`` command or the ones written by the developer in the ``docs`` folder. 
+
+.. note:: Using the approach described above only ``sphinx-build`` will be executed when one of the \*.rst files in the ``docs`` folder, for example ``docs/index.rst``, changes. When a public header file of the library changes, all three commands will be executed. Code changes which does not affect public header files won't trigger any execution of the three commands.

@@ -31,8 +31,9 @@
 *.out
 *.app
 
-# VSCode folder
+# IDE folder/files
 .vscode
+*.user
 
 # Doxygen folder
 docs/animals/*
