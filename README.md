@@ -1,8 +1,8 @@
 # Documentation Template
 
-Template project to use [doxygen](https://www.doxygen.nl/), [doxysphinx](https://github.com/boschglobal/doxysphinx), [doxylink](https://github.com/sphinx-contrib/doxylink), [Sphinx](https://www.sphinx-doc.org/en/master/) and [Read the Docs](https://about.readthedocs.com/) for project documentation. As an example a C++ library is added to this project (see `libs` folder) using CMake. The documentation can either be automatically build using CMake targets or locally using the terminal.
+Template project to use [doxygen](https://www.doxygen.nl/), [doxysphinx](https://github.com/boschglobal/doxysphinx), [doxylink](https://github.com/sphinx-contrib/doxylink), [Sphinx](https://www.sphinx-doc.org/en/master/) and [Read the Docs](https://about.readthedocs.com/) for project documentation. As an example, a C++ library is added to this project (see `libs` folder) using CMake. The documentation can either be automatically build using CMake targets or locally using the terminal.
 
-Have a look at the Read the Docs documentation [here](https://doxysphinx-with-read-the-docs-template.readthedocs.io/en/latest/). You can also find additional information about the build process there.
+Take a look at the Read the Docs documentation [here](https://doxysphinx-with-read-the-docs-template.readthedocs.io/en/latest/). You can also find additional information about the build process there.
 
 ## Key features
 
